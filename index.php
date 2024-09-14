@@ -4,6 +4,10 @@ include_once("includes/db.php");
 include_once("includes/utils.php");
 $db = dbConnect();
 
+function checkValidCode(string $str) : bool {
+    return strlen($str) <= 20 && strlen($str) >= 5;
+}
+
 
 // CREATE CLIPBOARD \\
 
@@ -14,7 +18,11 @@ function createClipboard(string $content, string $type = ""): void
     $codeGen = false;
     $codeVal = "";
     while (!$codeGen) {
-        $codeVal = generateRandomString();
+        $lines = file("data/codewords");
+        $word1=$lines[array_rand($lines)];
+        $word2=$lines[array_rand($lines)];
+        $word3=$lines[array_rand($lines)];
+        $codeVal = substr($word1, 0, strlen($word1)-1) . "-" . substr($word2, 0, strlen($word2)-1) . "-" . substr($word3, 0, strlen($word3)-1);
 
         $cpoiStatement = $db->prepare('SELECT ID FROM cpoi WHERE code = :code');
         $cpoiStatement->execute([
@@ -62,7 +70,7 @@ function deleteClipboard(string $code): void
 }
 
 // manually delete clipboard
-if (isset($_GET["d"]) && strlen(htmlspecialchars($_GET["d"])) <= 10 && strlen(htmlspecialchars($_GET["d"])) >= 4) {
+if (isset($_GET["d"]) && checkValidCode(htmlspecialchars($_GET["d"]))) {
     $cpoiStatement = $db->prepare('SELECT ID FROM cpoi WHERE code = :code');
     $cpoiStatement->execute([
         'code' => htmlspecialchars($_GET["d"])
@@ -80,7 +88,7 @@ if (isset($_GET["d"]) && strlen(htmlspecialchars($_GET["d"])) <= 10 && strlen(ht
 
 // PASTE CLIPBOARD \\
 
-if (isset($_GET["p"]) && strlen(htmlspecialchars($_GET["p"])) <= 10 && strlen(htmlspecialchars($_GET["p"])) >= 4) {
+if (isset($_GET["p"]) && checkValidCode(htmlspecialchars($_GET["p"]))) {
     $cpoiStatement = $db->prepare('SELECT * FROM cpoi WHERE code = :code');
     $cpoiStatement->execute([
         'code' => htmlspecialchars($_GET["p"])
