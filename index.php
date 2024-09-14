@@ -49,6 +49,37 @@ if (isset($_GET["uc"]) && strlen(htmlspecialchars($_GET["uc"])) < 1800) {
 }
 
 
+// DELETE CLIPBOARD \\
+
+function deleteClipboard(string $code): void
+{
+    global $db;
+
+    if (isset($_GET["d"]) && strlen(htmlspecialchars($_GET["d"])) <= 10 && strlen(htmlspecialchars($_GET["d"])) >= 4) {
+        $cpoiStatement = $db->prepare('DELETE FROM cpoi WHERE code = :code');
+        $cpoiStatement->execute([
+            'code' => $code
+        ]);
+    }
+}
+
+// manually delete clipboard
+if (isset($_GET["d"]) && strlen(htmlspecialchars($_GET["d"])) <= 10 && strlen(htmlspecialchars($_GET["d"])) >= 4) {
+    $cpoiStatement = $db->prepare('SELECT ID FROM cpoi WHERE code = :code');
+    $cpoiStatement->execute([
+        'code' => htmlspecialchars($_GET["d"])
+    ]);
+
+    $codes = $cpoiStatement->fetchAll();
+    if (sizeof($codes) == 0)
+        echo "CPOI ERROR: " . htmlspecialchars($_GET["d"]) . " is not a valid clipboard!";
+    else {
+        echo "Ok.";
+        deleteClipboard(htmlspecialchars($_GET["d"]));
+    }
+}
+
+
 // PASTE CLIPBOARD \\
 
 if (isset($_GET["p"]) && strlen(htmlspecialchars($_GET["p"])) <= 10 && strlen(htmlspecialchars($_GET["p"])) >= 4) {
@@ -61,20 +92,7 @@ if (isset($_GET["p"]) && strlen(htmlspecialchars($_GET["p"])) <= 10 && strlen(ht
     if (sizeof($codes) == 0)
         echo "CPOI ERROR: " . htmlspecialchars($_GET["p"]) . " is not a valid clipboard!";
     else {
-        
+        if ($codes[0]["type"] == "u")
+            deleteClipboard(htmlspecialchars($_GET["p"]));
     }
-}
-
-
-// DELETE CLIPBOARD \\
-
-if (isset($_GET["d"]) && strlen(htmlspecialchars($_GET["d"])) <= 10 && strlen(htmlspecialchars($_GET["d"])) >= 4) {
-    $cpoiStatement = $db->prepare('DELETE FROM cpoi WHERE code = :code');
-    $cpoiStatement->execute([
-        'code' => htmlspecialchars($_GET["d"])
-    ]);
-
-    $codes = $cpoiStatement->fetchAll();
-    if (sizeof($codes) == 0)
-        echo "CPOI ERROR: " . htmlspecialchars($_GET["d"]) . " is not a valid clipboard!";
 }
