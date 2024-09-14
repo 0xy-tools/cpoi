@@ -1,8 +1,6 @@
 <?php
 function getTime(int $d1, int $d2): string
 {
-        if ($d1 <= 1697832735)
-                return "a long time ago";
         $diffMs = $d2 - $d1;
         $diffDays = floor($diffMs / 86400); //   days
         $diffHrs = floor(($diffMs % 86400) / 3600); // hours

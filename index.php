@@ -8,6 +8,15 @@ function checkValidCode(string $str) : bool {
     return strlen($str) <= 20 && strlen($str) >= 5;
 }
 
+function passiveClean(): void
+{
+    global $db;
+
+    $cpoiStatement = $db->prepare('DELETE FROM cpoi WHERE date < DATE_SUB(NOW(), INTERVAL 30 DAY_MINUTE)');
+    $cpoiStatement->execute();
+}
+
+passiveClean();
 
 // CREATE CLIPBOARD \\
 
