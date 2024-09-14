@@ -55,12 +55,10 @@ function deleteClipboard(string $code): void
 {
     global $db;
 
-    if (isset($_GET["d"]) && strlen(htmlspecialchars($_GET["d"])) <= 10 && strlen(htmlspecialchars($_GET["d"])) >= 4) {
-        $cpoiStatement = $db->prepare('DELETE FROM cpoi WHERE code = :code');
-        $cpoiStatement->execute([
-            'code' => $code
-        ]);
-    }
+    $cpoiStatement = $db->prepare('DELETE FROM cpoi WHERE code = :code');
+    $cpoiStatement->execute([
+        'code' => $code
+    ]);
 }
 
 // manually delete clipboard
@@ -92,7 +90,10 @@ if (isset($_GET["p"]) && strlen(htmlspecialchars($_GET["p"])) <= 10 && strlen(ht
     if (sizeof($codes) == 0)
         echo "CPOI ERROR: " . htmlspecialchars($_GET["p"]) . " is not a valid clipboard!";
     else {
-        if ($codes[0]["type"] == "u")
+        if ($codes[0]["type"] == "u") {
             deleteClipboard(htmlspecialchars($_GET["p"]));
+        }
+
+        echo $codes[0]["value"];
     }
 }
