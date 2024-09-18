@@ -95,10 +95,16 @@ if (isset($_GET["a"]) && checkValidValue(htmlspecialchars($_GET["a"]))) {
 
     $sqlQuery = 'UPDATE cpoi SET date = current_timestamp(), value = :value WHERE code = :code';
 
+    $newValue = $codes[0]["value"] . $agg;
+
+    if (strlen($newValue) > 60000) {
+        echo "CPOI ERROR: Clipboard can not be longer than 60000 chars. " . htmlspecialchars($code) . " has not been updated.";
+        exit;
+    }
     $updateCpoi = $db->prepare($sqlQuery);
     $updateCpoi->execute([
         'code' => $code,
-        'value' => $codes[0]["value"] . $agg
+        'value' => $newValue
     ]);
     echo $updateCpoi->rowCount();
 }
