@@ -6,8 +6,18 @@ $db = dbConnect();
 
 function checkValidCode(string $str): bool
 {
-    return strlen($str) <= 20 && strlen($str) >= 5;
+    $val = strlen($str) <= 20 && strlen($str) >= 5;
+    if (!$val) echo "CPOI ERROR: Code is not in a valid format";
+    return $val;
 }
+
+function checkValidValue(string $str): bool
+{
+    $val = strlen($str) <= 1800;
+    if (!$val) echo "CPOI ERROR: Value is not in a valid format (max length = 1800)";
+    return $val;
+}
+
 
 function passiveClean(): void
 {
@@ -57,17 +67,17 @@ function createClipboard(string $content, string $type = ""): void
 }
 
 // create normal clipboard
-if (isset($_GET["c"]) && strlen(htmlspecialchars($_GET["c"])) < 1800) {
+if (isset($_GET["c"]) && checkValidValue(htmlspecialchars($_GET["c"]))) {
     createClipboard(htmlspecialchars($_GET["c"]));
 }
 
 // create unique normal clipboard
-if (isset($_GET["uc"]) && strlen(htmlspecialchars($_GET["uc"])) < 1800) {
+if (isset($_GET["uc"]) && checkValidValue(htmlspecialchars($_GET["uc"]))) {
     createClipboard(htmlspecialchars($_GET["uc"]), "u");
 }
 
 // aggregate clipboard
-if (isset($_GET["a"]) && strlen(htmlspecialchars($_GET["a"])) < 1800) {
+if (isset($_GET["a"]) && checkValidValue(htmlspecialchars($_GET["a"]))) {
     $split = explode(':', htmlspecialchars($_GET["a"]), 2);
     $code = $split[0];
     $agg = $split[1];
