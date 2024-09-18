@@ -6,11 +6,12 @@ It's a tool to simply easily copy and paste over machines.
 
 ## Server
 
-You will be able to get the server code here (php/sql).\
+You will be able to get the server code here (php/sql).
 
-## Client
+## Client (submodule)
 
-There is a command line interface to simply use it from a terminal [cpoi-cli](./cpoi-cli/). If you only want the CLI, you can clone the [cpoi-cli](https://github.com/MagicTINTIN/cpoi-cli) repo.
+There is a command line interface to simply use it from a terminal [cpoi-cli](https://github.com/MagicTINTIN/cpoi-cli). If you only want the CLI, you can clone the [cpoi-cli](https://github.com/MagicTINTIN/cpoi-cli) repo.\
+To clone everything **`git clone --recursive https://github.com/MagicTINTIN/cpoi`** or `git clone https://github.com/MagicTINTIN/cpoi && git submodule update --init`.
 
 ---
 # Available requests
