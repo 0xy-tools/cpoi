@@ -4,7 +4,8 @@ include_once("includes/db.php");
 include_once("includes/utils.php");
 $db = dbConnect();
 
-function checkValidCode(string $str) : bool {
+function checkValidCode(string $str): bool
+{
     return strlen($str) <= 20 && strlen($str) >= 5;
 }
 
@@ -28,10 +29,10 @@ function createClipboard(string $content, string $type = ""): void
     $codeVal = "";
     while (!$codeGen) {
         $lines = file("data/codewords");
-        $word1=$lines[array_rand($lines)];
-        $word2=$lines[array_rand($lines)];
-        $word3=$lines[array_rand($lines)];
-        $codeVal = substr($word1, 0, strlen($word1)-1) . "-" . substr($word2, 0, strlen($word2)-1) . "-" . substr($word3, 0, strlen($word3)-1);
+        $word1 = $lines[array_rand($lines)];
+        $word2 = $lines[array_rand($lines)];
+        $word3 = $lines[array_rand($lines)];
+        $codeVal = substr($word1, 0, strlen($word1) - 1) . "-" . substr($word2, 0, strlen($word2) - 1) . "-" . substr($word3, 0, strlen($word3) - 1);
 
         $cpoiStatement = $db->prepare('SELECT ID FROM cpoi WHERE code = :code');
         $cpoiStatement->execute([
@@ -63,6 +64,33 @@ if (isset($_GET["c"]) && strlen(htmlspecialchars($_GET["c"])) < 1800) {
 // create unique normal clipboard
 if (isset($_GET["uc"]) && strlen(htmlspecialchars($_GET["uc"])) < 1800) {
     createClipboard(htmlspecialchars($_GET["uc"]), "u");
+}
+
+// aggregate clipboard
+if (isset($_GET["a"]) && strlen(htmlspecialchars($_GET["a"])) < 1800) {
+    $split = explode(':', htmlspecialchars($_GET["a"]), 2);
+    $code = $split[0];
+    $agg = $split[1];
+
+    $cpoiStatement = $db->prepare('SELECT * FROM cpoi WHERE code = :code');
+    $cpoiStatement->execute([
+        'code' => htmlspecialchars($code)
+    ]);
+
+    $codes = $cpoiStatement->fetchAll();
+    if (sizeof($codes) == 0) {
+        echo "CPOI ERROR: " . htmlspecialchars($code) . " is not a valid clipboard!";
+        exit;
+    }
+
+    $sqlQuery = 'UPDATE cpoi SET date = current_timestamp(), value = :value WHERE code = :code';
+
+    $updateCpoi = $db->prepare($sqlQuery);
+    $updateCpoi->execute([
+        'code' => $code,
+        'value' => $codes[0]["value"] . $agg
+    ]);
+    echo $updateCpoi->rowCount();
 }
 
 
