@@ -1,0 +1,3 @@
+[submodule "cpoi-cli"]
+	path = cpoi-cli
+	url = https://github.com/MagicTINTIN/cpoi-cli
