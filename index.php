@@ -39,9 +39,9 @@ function createClipboard(string $content, string $type = ""): void
     $codeVal = "";
     while (!$codeGen) {
         if (isset($_GET["fr"]))
-        $lines = file("data/enWords");
+            $lines = file("data/frWords");
         else
-        $lines = file("data/codewords");
+            $lines = file("data/enWords");
         $word1 = $lines[array_rand($lines)];
         $word2 = $lines[array_rand($lines)];
         $word3 = $lines[array_rand($lines)];
