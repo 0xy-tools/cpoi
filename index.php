@@ -4,9 +4,15 @@ include_once("includes/db.php");
 include_once("includes/utils.php");
 $db = dbConnect();
 
-function checkValidCode(string $str): bool
+function checkValidCodeSilent(string $str): bool
 {
     $val = strlen($str) <= 20 && strlen($str) >= 5;
+    return $val;
+}
+
+function checkValidCode(string $str): bool
+{
+    $val = checkValidCode($str);
     if (!$val) echo "CPOI ERROR: Code is not in a valid format";
     return $val;
 }
@@ -144,20 +150,40 @@ if (isset($_GET["d"]) && checkValidCode(htmlspecialchars($_GET["d"]))) {
 
 // PASTE CLIPBOARD \\
 
-if (isset($_GET["p"]) && checkValidCode(htmlspecialchars($_GET["p"]))) {
+function pasting(string $input): int
+{
+    global $db;
     $cpoiStatement = $db->prepare('SELECT * FROM cpoi WHERE code = :code');
     $cpoiStatement->execute([
-        'code' => htmlspecialchars($_GET["p"])
+        'code' => $input
     ]);
 
     $codes = $cpoiStatement->fetchAll();
-    if (sizeof($codes) == 0)
-        echo "CPOI ERROR: " . htmlspecialchars($_GET["p"]) . " is not a valid clipboard!";
-    else {
+    if (sizeof($codes) == 0) {
+        return 1;
+    } else {
         if ($codes[0]["type"] == "u") {
-            deleteClipboard(htmlspecialchars($_GET["p"]));
+            deleteClipboard($input);
         }
 
         echo $codes[0]["value"];
+        return 0;
     }
+}
+
+if (isset($_GET["p"]) && checkValidCode(htmlspecialchars($_GET["p"]))) {
+    if (pasting(htmlspecialchars($_GET["p"])) == 1)
+        echo "CPOI ERROR: " . $input . " is not a valid clipboard!";
+}
+
+
+// AUTOMATIC CLIPBOARD \\
+
+// create or paste easy clipboard
+if (isset($_GET["e"]) && checkValidValue(htmlspecialchars($_GET["e"]))) {
+    if (checkValidCodeSilent(htmlspecialchars($_GET["e"]))) {
+        if (pasting(htmlspecialchars($_GET["e"])) == 1)
+            createClipboard(htmlspecialchars($_GET["e"]));
+    } else
+        createClipboard(htmlspecialchars($_GET["e"]));
 }
