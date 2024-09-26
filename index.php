@@ -12,7 +12,7 @@ function checkValidCodeSilent(string $str): bool
 
 function checkValidCode(string $str): bool
 {
-    $val = checkValidCode($str);
+    $val = checkValidCodeSilent($str);
     if (!$val) echo "CPOI ERROR: Code is not in a valid format";
     return $val;
 }
