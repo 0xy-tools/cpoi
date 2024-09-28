@@ -54,6 +54,20 @@ function createClipboard(string $content, string $type = ""): void
 {
     global $db;
 
+    if (isset($_GET["t"]) && $type == "") {
+        if (htmlspecialchars($_GET["t"]) == "u")
+            $type = "u";
+        if (htmlspecialchars($_GET["t"]) == "l")
+            $type = "l";
+        if (htmlspecialchars($_GET["t"]) == "s")
+            $type = "s";
+    }
+
+    $moreinfo = "";
+    if (isset($_GET["m"]) && strlen(htmlspecialchars($_GET["m"])) < 500) {
+        $moreinfo = htmlspecialchars($_GET["m"]);
+    }
+
     $codeGen = false;
     $codeVal = "";
     while (!$codeGen) {
@@ -76,10 +90,11 @@ function createClipboard(string $content, string $type = ""): void
             $codeGen = true;
     }
 
-    $sqlQuery = 'INSERT INTO cpoi(type, code, value) VALUES (:type, :code, :value)';
+    $sqlQuery = 'INSERT INTO cpoi(info, type, code, value) VALUES (:info, :type, :code, :value)';
 
     $insertCPoi = $db->prepare($sqlQuery);
     $insertCPoi->execute([
+        'info' => $moreinfo,
         'type' => $type,
         'value' => $content,
         'code' => $codeVal
@@ -90,14 +105,7 @@ function createClipboard(string $content, string $type = ""): void
 
 // create normal clipboard
 if (isset($_GET["c"]) && checkValidValue(htmlspecialchars($_GET["c"]))) {
-    $type = "";
-    if (isset($_GET["t"])) {
-        if (htmlspecialchars($_GET["t"]) == "l")
-            $type = "l";
-        if (htmlspecialchars($_GET["t"]) == "s")
-            $type = "s";
-    }
-    createClipboard(htmlspecialchars($_GET["c"]), $type);
+    createClipboard(htmlspecialchars($_GET["c"]));
 }
 
 // create unique normal clipboard
@@ -119,6 +127,9 @@ if (isset($_GET["a"]) && checkValidValue(htmlspecialchars($_GET["a"]))) {
     $codes = $cpoiStatement->fetchAll();
     if (sizeof($codes) == 0) {
         echo "CPOI ERROR: " . htmlspecialchars($code) . " is not a valid clipboard!";
+        exit;
+    } else if (str_contains($codes[0]["info"], "const")) {
+        echo "CPOI ERROR: " . htmlspecialchars($code) . " is not editable!";
         exit;
     }
 
