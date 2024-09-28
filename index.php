@@ -1,5 +1,9 @@
 <?php session_start();
 
+// ini_set('display_errors', '1');
+// ini_set('display_startup_errors', '1');
+// error_reporting(E_ALL);
+
 include_once("includes/db.php");
 include_once("includes/utils.php");
 $db = dbConnect();
@@ -128,11 +132,12 @@ if (isset($_GET["a"]) && checkValidValue(htmlspecialchars($_GET["a"]))) {
     if (sizeof($codes) == 0) {
         echo "CPOI ERROR: " . htmlspecialchars($code) . " is not a valid clipboard!";
         exit;
-    } else if (str_contains($codes[0]["info"], "const")) {
+    }
+
+    if (strpos($codes[0]["info"], "const") !== false) {
         echo "CPOI ERROR: " . htmlspecialchars($code) . " is not editable!";
         exit;
     }
-
     $sqlQuery = 'UPDATE cpoi SET date = current_timestamp(), value = :value WHERE code = :code';
 
     $newValue = $codes[0]["value"] . $agg;
