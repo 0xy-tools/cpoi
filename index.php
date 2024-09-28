@@ -29,7 +29,20 @@ function passiveClean(): void
 {
     global $db;
 
-    $cpoiStatement = $db->prepare('DELETE FROM cpoi WHERE date < DATE_SUB(NOW(), INTERVAL 30 DAY_MINUTE)');
+    // delete normal
+    $cpoiStatement = $db->prepare('DELETE FROM cpoi WHERE type=:type AND date < DATE_SUB(NOW(), INTERVAL 30 DAY_MINUTE)');
+    $cpoiStatement->execute(['type' => '']);
+    // delete unique
+    $cpoiStatement = $db->prepare('DELETE FROM cpoi WHERE type=:type AND date < DATE_SUB(NOW(), INTERVAL 30 DAY_MINUTE)');
+    $cpoiStatement->execute(['type' => 'u']);
+    // delete short life
+    $cpoiStatement = $db->prepare('DELETE FROM cpoi WHERE type=:type AND date < DATE_SUB(NOW(), INTERVAL 5 DAY_MINUTE)');
+    $cpoiStatement->execute(['type' => 's']);
+    // delete long life
+    $cpoiStatement = $db->prepare('DELETE FROM cpoi WHERE type=:type AND date < DATE_SUB(NOW(), INTERVAL 12 DAY_HOUR)');
+    $cpoiStatement->execute(['type' => 'l']);
+    // delete anything that would still be in the table
+    $cpoiStatement = $db->prepare('DELETE FROM cpoi WHERE date < DATE_SUB(NOW(), INTERVAL 24 DAY_HOUR)');
     $cpoiStatement->execute();
 }
 
@@ -77,7 +90,14 @@ function createClipboard(string $content, string $type = ""): void
 
 // create normal clipboard
 if (isset($_GET["c"]) && checkValidValue(htmlspecialchars($_GET["c"]))) {
-    createClipboard(htmlspecialchars($_GET["c"]));
+    $type = "";
+    if (isset($_GET["t"])) {
+        if (htmlspecialchars($_GET["t"]) == "l")
+            $type = "l";
+        if (htmlspecialchars($_GET["t"]) == "s")
+            $type = "s";
+    }
+    createClipboard(htmlspecialchars($_GET["c"]), $type);
 }
 
 // create unique normal clipboard
@@ -173,7 +193,7 @@ function pasting(string $input): int
 
 if (isset($_GET["p"]) && checkValidCode(htmlspecialchars($_GET["p"]))) {
     if (pasting(htmlspecialchars($_GET["p"])) == 1)
-        echo "CPOI ERROR: " . $input . " is not a valid clipboard!";
+        echo "CPOI ERROR: " . htmlspecialchars($_GET["p"]) . " is not a valid clipboard!";
 }
 
 
