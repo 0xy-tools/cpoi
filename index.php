@@ -57,7 +57,7 @@ function createClipboard(string $content, string $type = ""): void
     $codeGen = false;
     $codeVal = "";
     while (!$codeGen) {
-        if (isset($_GET["fr"]))
+        if (isset($_GET["l"]) && htmlspecialchars($_GET["l"]) == "fr")
             $lines = file("data/frWords");
         else
             $lines = file("data/enWords");
