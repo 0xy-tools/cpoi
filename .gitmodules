@@ -1,3 +1,8 @@
 [submodule "cpoi-cli"]
 	path = cpoi-cli
 	url = https://github.com/MagicTINTIN/cpoi-cli
+	branch = main
+[submodule "cpoi-extension"]
+	path = cpoi-extension
+	url = https://github.com/MagicTINTIN/cpoi-extension
+	branch = main
