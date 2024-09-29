@@ -1,0 +1,304 @@
+body {
+    width: 20rem;
+    border-radius: 10%;
+    background-color: var(--bg);
+    opacity: 0.8;
+    background: radial-gradient(circle, transparent 20%, var(--bg) 20%, var(--bg) 80%, transparent 80%, transparent), radial-gradient(circle, transparent 20%, var(--bg) 20%, var(--bg) 80%, transparent 80%, transparent) 10px 10px, linear-gradient(var(--bgv) 0.8px, transparent 0.8px) 0 -0.4px, linear-gradient(90deg, var(--bgv) 0.8px, var(--bg) 0.8px) -0.4px 0;
+    background-size: 20px 20px, 20px 20px, 10px 10px, 10px 10px;
+    color: var(--fg);
+    transition: all 0.2s;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: large;
+
+    user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+
+    /* height: 70vh; */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* overflow-x: hidden; */
+}
+
+.buttonGroup {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.valign {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+nav {
+    top: 0;
+    left: 0;
+    position: absolute;
+    box-sizing: border-box;
+    width: 20rem;
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.textButton {
+    box-sizing: border-box;
+    font-weight: 900;
+    font-size: 1em;
+    transition: all 0.2s;
+}
+
+.verysmall {
+    font-size: x-small;
+}
+
+.navSvgBtn {
+    height: 23px;
+    width: 23px;
+    margin-right: 12px;
+    margin-left: 12px;
+    filter: var(--svgn);
+    transition: all 0.2s;
+}
+
+.navSvgBtn:hover {
+    filter: var(--svgh);
+}
+
+.navSvgBtn:active {
+    filter: var(--svgn);
+}
+
+.spanButton {
+    color: var(--fgv);
+    transition: all 0.1s;
+    cursor: pointer;
+
+    user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    box-sizing: border-box;
+}
+
+.spanButton:hover {
+    color: var(--fg);
+    text-shadow: 0px 0px 5px70 var(--fg);
+}
+
+.spanButton:active, .navSvgBtn:active {
+    transform: scale(0.9);
+}
+h1,
+h4 {
+    font-weight: bold;
+    text-align: center;
+
+    user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+h1 {
+    margin-top: 0.5em;
+}
+
+
+h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+h6 {
+    margin-top: 10px;
+    margin-bottom: 2px;
+    font-weight: bold;
+    text-align: center;
+}
+
+h1 {
+    text-shadow: 0px 0px 5px var(--fg);
+}
+
+main {
+    width: 100%;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+section {
+    width: 100%;
+    height: 100%;
+}
+
+#footerLinkContainer {
+    width: 100%;
+
+    margin: auto;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    text-align: center;
+}
+
+.bottomLink {
+    font-size: x-small;
+    color: var(--fgv);
+    /* width: 75vw; */
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.2s;
+    box-sizing: border-box;
+}
+
+.bottomLink:visited {
+    color: var(--fgv);
+}
+
+.bottomLink:hover {
+    color: var(--fg);
+    text-decoration: underline;
+}
+
+.bottomLink:active {
+    color: var(--fgv);
+    text-decoration: underline;
+}
+
+#infoTempPopUp {
+    top: 25vh;
+    left: 25vw;
+    width: 50vw;
+    height: 50vh;
+    position: fixed;
+    z-index: 1000;
+    background-color: var(--bgv);
+    border: solid 2px var(--fgv);
+    color: var(--fg);
+    box-shadow: 0px 0px 7px var(--fgv);
+    border-radius: 8px;
+    padding: 5px;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#infoTempPopUp h2, #infoTempPopUp p {
+    text-align: center;
+}
+
+#infoTempPopUp:hover {
+    background-color: var(--bg);
+}
+
+.termsButton {
+    font-size: small;
+    margin: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    width: 100%;
+    text-align: center;
+    text-decoration: underline;
+    color: var(--fgv);
+}
+
+.termsButton:hover {
+    color: var(--fg);
+    text-shadow: 0 0 5px var(--fgv);
+}
+
+.termsButton:active {
+    transform: scale(0.9);
+    color: var(--fgv);
+    text-shadow: 0 0 3px var(--fgv);
+}
+
+.terms {
+    box-sizing: border-box;
+    height: 20rem;
+    width: 19rem;
+    margin: auto;
+    overflow-y: auto;
+    background-color: var(--bgv);
+    color: var(--fg);
+    border: solid 1px var(--b);
+    box-shadow: 0px 0px 5px inset var(--b), 0px 0px 20px var(--b);
+    transition: all 0.2s;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: justify;
+
+    font-size: 0.6em;
+}
+
+.terms h5 {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    font-size: 1em;
+}
+
+.terms:hover {
+    background-color: var(--bg);
+}
+
+#byClickText {
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: small;
+    color: var(--fgv);
+}
+
+.licenseLink, .licenseLink:visited {
+    color: var(--fg);
+}
+
+/* ----------- SCROLLBAR ----------- */
+
+::-webkit-scrollbar {
+    width: 8px;
+    background: #00000000;
+}
+
+::-webkit-scrollbar:hover {
+    background: #00000000;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-color: #00000000;
+    border: none;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background-clip: content-box;
+    background-color: var(--fgv);
+    transition: all 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    border-radius: 4px;
+    background-color: var(--fg);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background-color: var(--fgv);
+}
