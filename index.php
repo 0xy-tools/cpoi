@@ -58,24 +58,24 @@ function createClipboard(string $content, string $type = ""): void
 {
     global $db;
 
-    if (isset($_GET["t"]) && $type == "") {
-        if (htmlspecialchars($_GET["t"]) == "u")
+    if (isset($_REQUEST["t"]) && $type == "") {
+        if (htmlspecialchars($_REQUEST["t"]) == "u")
             $type = "u";
-        if (htmlspecialchars($_GET["t"]) == "l")
+        if (htmlspecialchars($_REQUEST["t"]) == "l")
             $type = "l";
-        if (htmlspecialchars($_GET["t"]) == "s")
+        if (htmlspecialchars($_REQUEST["t"]) == "s")
             $type = "s";
     }
 
     $moreinfo = "";
-    if (isset($_GET["m"]) && strlen(htmlspecialchars($_GET["m"])) < 500) {
-        $moreinfo = htmlspecialchars($_GET["m"]);
+    if (isset($_REQUEST["m"]) && strlen(htmlspecialchars($_REQUEST["m"])) < 500) {
+        $moreinfo = htmlspecialchars($_REQUEST["m"]);
     }
 
     $codeGen = false;
     $codeVal = "";
     while (!$codeGen) {
-        if (isset($_GET["l"]) && htmlspecialchars($_GET["l"]) == "fr")
+        if (isset($_REQUEST["l"]) && htmlspecialchars($_REQUEST["l"]) == "fr")
             $lines = file("data/frWords");
         else
             $lines = file("data/enWords");
@@ -108,18 +108,18 @@ function createClipboard(string $content, string $type = ""): void
 }
 
 // create normal clipboard
-if (isset($_GET["c"]) && checkValidValue(htmlspecialchars($_GET["c"]))) {
-    createClipboard(htmlspecialchars($_GET["c"]));
+if (isset($_REQUEST["c"]) && checkValidValue(htmlspecialchars($_REQUEST["c"]))) {
+    createClipboard(htmlspecialchars($_REQUEST["c"]));
 }
 
 // create unique normal clipboard
-if (isset($_GET["uc"]) && checkValidValue(htmlspecialchars($_GET["uc"]))) {
-    createClipboard(htmlspecialchars($_GET["uc"]), "u");
+if (isset($_REQUEST["uc"]) && checkValidValue(htmlspecialchars($_REQUEST["uc"]))) {
+    createClipboard(htmlspecialchars($_REQUEST["uc"]), "u");
 }
 
 // aggregate clipboard
-if (isset($_GET["a"]) && checkValidValue(htmlspecialchars($_GET["a"]))) {
-    $split = explode(':', htmlspecialchars($_GET["a"]), 2);
+if (isset($_REQUEST["a"]) && checkValidValue(htmlspecialchars($_REQUEST["a"]))) {
+    $split = explode(':', htmlspecialchars($_REQUEST["a"]), 2);
     $code = $split[0];
     $agg = $split[1];
 
@@ -168,18 +168,18 @@ function deleteClipboard(string $code): void
 }
 
 // manually delete clipboard
-if (isset($_GET["d"]) && checkValidCode(htmlspecialchars($_GET["d"]))) {
+if (isset($_REQUEST["d"]) && checkValidCode(htmlspecialchars($_REQUEST["d"]))) {
     $cpoiStatement = $db->prepare('SELECT ID FROM cpoi WHERE code = :code');
     $cpoiStatement->execute([
-        'code' => htmlspecialchars($_GET["d"])
+        'code' => htmlspecialchars($_REQUEST["d"])
     ]);
 
     $codes = $cpoiStatement->fetchAll();
     if (sizeof($codes) == 0)
-        echo "CPOI ERROR: " . htmlspecialchars($_GET["d"]) . " is not a valid clipboard!";
+        echo "CPOI ERROR: " . htmlspecialchars($_REQUEST["d"]) . " is not a valid clipboard!";
     else {
         echo "Ok.";
-        deleteClipboard(htmlspecialchars($_GET["d"]));
+        deleteClipboard(htmlspecialchars($_REQUEST["d"]));
     }
 }
 
@@ -207,41 +207,28 @@ function pasting(string $input): int
     }
 }
 
-if (isset($_GET["p"]) && checkValidCode(htmlspecialchars($_GET["p"]))) {
-    if (pasting(htmlspecialchars($_GET["p"])) == 1)
-        echo "CPOI ERROR: " . htmlspecialchars($_GET["p"]) . " is not a valid clipboard!";
+if (isset($_REQUEST["p"]) && checkValidCode(htmlspecialchars($_REQUEST["p"]))) {
+    if (pasting(htmlspecialchars($_REQUEST["p"])) == 1)
+        echo "CPOI ERROR: " . htmlspecialchars($_REQUEST["p"]) . " is not a valid clipboard!";
 }
 
 
 // AUTOMATIC CLIPBOARD \\
 
 // create or paste easy clipboard
-if (isset($_GET["e"]) && checkValidValue(htmlspecialchars($_GET["e"]))) {
-    if (checkValidCodeSilent(htmlspecialchars($_GET["e"]))) {
-        if (pasting(htmlspecialchars($_GET["e"])) == 1)
-            createClipboard(htmlspecialchars($_GET["e"]));
+if (isset($_REQUEST["e"]) && checkValidValue(htmlspecialchars($_REQUEST["e"]))) {
+    if (checkValidCodeSilent(htmlspecialchars($_REQUEST["e"]))) {
+        if (pasting(htmlspecialchars($_REQUEST["e"])) == 1)
+            createClipboard(htmlspecialchars($_REQUEST["e"]));
     } else
-        createClipboard(htmlspecialchars($_GET["e"]));
+        createClipboard(htmlspecialchars($_REQUEST["e"]));
 }
 
 // POST ANSWERS \\
 
-// basic answer
-if (isset($_GET["post"])) {
-    if (isset($_POST["msg"])) {
-        echo "pong: " . htmlspecialchars($_POST["msg"]);
-    } else {
-        echo "CPOI ERROR: POST METHOD NEED A POSTED MSG!";
-    }
-}
-
-
 // basic pong
-if (isset($_POST["ping"])) {
-    echo "pong! ->" . htmlspecialchars($_POST["ping"]);
-    // return "pong! ->" . htmlspecialchars($_POST["ping"]);
-    // echo json_encode("pong! ->" . htmlspecialchars($_POST["ping"]));
+if (isset($_REQUEST["ping"])) {
+    echo "pong!";
 }
-//  else {
-//     echo "wrong.";
-// }
+
+
