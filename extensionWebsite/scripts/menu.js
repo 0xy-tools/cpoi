@@ -1,6 +1,3 @@
-const DEFAULT_MAX_LENGTH = 1700;
-const AGGREGATE_MAX_LENGTH = 60000;
-
 function urlEncode(input) {
     // let input = encodeHTMLEntities(rawInput);
     if (localSettings.post == false)
@@ -254,15 +251,6 @@ document.getElementById("aButton").addEventListener("click", () => { getEasyFrom
 document.getElementById("cButton").addEventListener("click", () => { getCodeFromCPOI(document.getElementById("codeInput"), 'c', urlEncode(document.getElementById("dataInput").value), localSettings.lang) });
 document.getElementById("pButton").addEventListener("click", () => { getClipboardFromCPOI(document.getElementById("dataInput"), document.getElementById("codeInput").value) });
 
-function home() {
-    document.getElementById("easySection").style.display = localSettings.mode == "easy" ? "block" : "none";
-    document.getElementById("settingsSection").style.display = "none";
-    document.getElementById("classicSection").style.display = localSettings.mode == "easy" ? "none" : "block";
-    document.getElementById("qrCodeSection").style.display = "none";
-    document.getElementById("termsSection").style.display = "none";
-    document.getElementById("advancedSection").style.display = localSettings.mode == "advanced" ? "block" : "none";
-}
-
 // SUBMENUS
 
 function showTerms() {
@@ -296,7 +284,7 @@ document.getElementById("settings").addEventListener("click", () => {
         autoFocus();
     } else {
         document.getElementById("settings").innerHTML = "⨯";
-        document.getElementById("qrIcon").src = "../images/qrcode.svg";
+        document.getElementById("qrIcon").src = "./images/qrcode.svg";
         inSettings = true;
         inQrcode = false;
         document.getElementById("settingsSection").style.display = "block";
@@ -309,12 +297,12 @@ document.getElementById("settings").addEventListener("click", () => {
 let inQrcode = false;
 document.getElementById("qrGenButton").addEventListener("click", () => {
     if (inQrcode) {
-        document.getElementById("qrIcon").src = "../images/qrcode.svg";
+        document.getElementById("qrIcon").src = "./images/qrcode.svg";
         inQrcode = false;
         home();
     } else {
         document.getElementById("settings").innerHTML = "⚙";
-        document.getElementById("qrIcon").src = "../images/cross.svg";
+        document.getElementById("qrIcon").src = "./images/cross.svg";
         inQrcode = true;
         inSettings = false;
         document.getElementById("settingsSection").style.display = "none";
@@ -331,13 +319,6 @@ document.getElementById("saveSettings").addEventListener("click", () => {
     home();
     autoFocus();
 });
-
-function autoFocus() {
-    if (localSettings.mode == "easy")
-        document.getElementById("autoInput").focus();
-    else
-        document.getElementById("dataInput").focus();
-}
 
 // KEYBOARD SHORTCUTS
 

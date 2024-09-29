@@ -1,8 +1,21 @@
-thisBrowser.storage.onChanged.addListener(function (changes, areaName) {
-    for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
-        console.log(`Storage key "${key}" in "${areaName}" changed. Old value: ${oldValue}, new value: ${newValue}`);
-    }
-});
+const DEFAULT_MAX_LENGTH = 1700;
+const AGGREGATE_MAX_LENGTH = 60000;
+
+function home() {
+    document.getElementById("easySection").style.display = localSettings.mode == "easy" ? "block" : "none";
+    document.getElementById("settingsSection").style.display = "none";
+    document.getElementById("classicSection").style.display = localSettings.mode == "easy" ? "none" : "block";
+    document.getElementById("qrCodeSection").style.display = "none";
+    document.getElementById("termsSection").style.display = "none";
+    document.getElementById("advancedSection").style.display = localSettings.mode == "advanced" ? "block" : "none";
+}
+
+function autoFocus() {
+    if (localSettings.mode == "easy")
+        document.getElementById("autoInput").focus();
+    else
+        document.getElementById("dataInput").focus();
+}
 
 function updtTheme() {
     if (localSettings.theme == "dark") {

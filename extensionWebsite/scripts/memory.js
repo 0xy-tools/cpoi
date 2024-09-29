@@ -1,11 +1,3 @@
-if (typeof browser === "undefined") {
-    var thisBrowser = chrome;  // If browser is undefined, fall back to chrome
-    var firefox = false;
-} else {
-    var thisBrowser = browser;
-    var firefox = true;
-}
-
 let localSettings;
 
 /**
@@ -13,32 +5,17 @@ let localSettings;
  * @param key 
  * @param callback that will take one arg
  */
-function get(key, callback = (value) => { }) {
+function get(key, callback = (values) => { }) {
     if (typeof key == "object") {
-        if (firefox)
-            thisBrowser.storage.sync.get(key).then((values) => {
-                // console.log("VALUE: ", values);
-                callback(values);
-            }, (reason) => { console.error("ERROR WHILE GETTING SETTINGS", reason); });
-        else
-            thisBrowser.storage.sync.get(key, (values) => {
-                // console.log("VALUE: ", values);
-                callback(values);
-            });
-        return;
+        let values = {};
+        for (const k of key) {
+            values[k] = localStorage.getItem(k);
+        }
+        callback(values);
     }
     else if (typeof key == "string") {
-        if (firefox)
-            thisBrowser.storage.sync.get([`${key}`]).then((value) => {
-                //console.log("VALUE: ", value);
-                callback(value);
-            }, (reason) => { console.error("ERROR WHILE GETTING SETTINGS", reason); });
-        else
-            thisBrowser.storage.sync.get([`${key}`], (value) => {
-                //console.log("VALUE: ", value);
-                callback(value);
-            });
-        return;
+        let value = localStorage.getItem(key);
+        callback(value);
     }
     else
         return console.log("The following type is not gettable:", key);
@@ -52,13 +29,10 @@ function get(key, callback = (value) => { }) {
 function set(kvObject, callback = () => { }) {
     console.log(kvObject);
     if (typeof kvObject == "object") {
-        if (firefox)
-            browser.storage.sync.set(kvObject).then(() => {
-                console.log("Settings saved");
-                callback();
-            }, (reason) => { console.error("ERROR WHILE GETTING SETTINGS", reason); });
-        else
-            thisBrowser.storage.sync.set(kvObject, function () { console.log("Settings saved"); callback() });
+        for (const key in kvObject) {
+            localStorage.setItem(key, kvObject[key]);
+        }
+        callback();
     }
     else
         return console.log("The following type is not settable:", key);
@@ -70,35 +44,15 @@ function set(kvObject, callback = () => { }) {
  * @param callback that will take one arg
  */
 function remove(keys, callback = () => { }) {
-    if (firefox)
-        thisBrowser.storage.sync.remove(keys).then(() => {
-            console.log("Deleted", keys);
-        });
-    else
-        thisBrowser.storage.sync.remove(keys, function () {
-            var error = chrome.runtime.lastError;
-            if (error) {
-                console.error(error);
-            }
-            console.log("Deleted", keys);
-        });
+    for (const k of keys) {
+        localStorage.removeItem(k);
+    }
+    callback();
 }
 
 function removeAll(callback = () => { }) {
-    if (firefox)
-        thisBrowser.storage.sync.clear().then(() => {
-            console.log("All settings have been reset!");
-            callback();
-        });
-    else
-        thisBrowser.storage.sync.clear(function () {
-            var error = chrome.runtime.lastError;
-            if (error) {
-                console.error(error);
-            }
-            console.log("All settings have been reset!");
-            callback();
-        });
+    localStorage.clear();
+    callback();
 }
 
 function getAll(callback = () => { }) {
