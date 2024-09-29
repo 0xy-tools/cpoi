@@ -95,7 +95,7 @@ function updtLang() {
     document.getElementById("pButton").innerHTML = localSettings.lang == "fr" ? "Coller" : "Paste";
     document.getElementById("aButton").innerHTML = localSettings.lang == "fr" ? "Copier/Coller" : "Copy/Paste";
     document.getElementById("bottomTerms").innerHTML = localSettings.lang == "fr" ? "Conditions Générales d'Utilisation" : "Terms Of Use";
-    
+
     // advanced
     document.getElementById("settingPost").innerHTML = localSettings.lang == "fr" ? (localSettings.post ? "méthode POST" : "méthode GET") : (localSettings.post ? "POST method" : "GET method");
     document.getElementById("settingConst").innerHTML = localSettings.lang == "fr" ? (localSettings.const ? "Inéditable" : "Agrégeable") : (localSettings.const ? "Uneditable" : "Aggregable");
@@ -221,6 +221,56 @@ function saveInstance() {
     getAll(updateAll);
 }
 
+
+// Get QR CODE info
+
+function parseURLParams(url) {
+    var queryStart = url.indexOf("?") + 1,
+        queryEnd = url.indexOf("#") + 1 || url.length + 1,
+        query = url.slice(queryStart, queryEnd - 1),
+        pairs = query.replace(/\+/g, " ").split("&"),
+        parms = {}, i, n, v, nv;
+
+    if (query === url || query === "") return;
+
+    for (i = 0; i < pairs.length; i++) {
+        nv = pairs[i].split("=", 2);
+        n = decodeURIComponent(nv[0]);
+        v = decodeURIComponent(nv[1]);
+
+        if (!parms.hasOwnProperty(n)) parms[n] = [];
+        parms[n].push(nv.length === 2 ? v : null);
+    }
+    return parms;
+}
+
+function getQRCode() {
+    const addressFinal = window.location.search;
+    addressArgs = parseURLParams(addressFinal);
+    console.log(addressArgs);
+    if (!addressArgs["qr"]) return;
+
+    // uncomment to auto set language
+    // if (addressArgs["l"]) set({l:addressArgs["l"]});
+    // set({tou:true}, updateAll());
+    // temporary set TOU to make it easier when copying
+    localSettings.tou = true;
+    if (addressArgs["p"]) {
+        if (localSettings.mode == "easy") {
+            document.getElementById("autoInput").value = addressArgs["p"];
+            setTimeout(() => {
+                document.getElementById("aButton").click();
+            }, 200);
+        } else {
+            document.getElementById("codeInput").value = addressArgs["p"];
+            setTimeout(() => {
+                document.getElementById("pButton").click();
+            }, 200);
+        }
+    }
+
+}
+
 // Initializing and updating all settings
 
 function updateAll() {
@@ -235,6 +285,7 @@ function initUpdateAll() {
     home();
     autoFocus();
 
+    getQRCode()
     // display TOU
     if (localSettings.tou == false) showTerms();
 }
