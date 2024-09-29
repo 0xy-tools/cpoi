@@ -23,9 +23,15 @@ function checkValidCode(string $str): bool
 
 function checkValidValue(string $str): bool
 {
-    $val = strlen($str) <= 1800;
-    if (!$val) echo "CPOI ERROR: Value is not in a valid format (max length = 1800)";
-    return $val;
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        $val = strlen($str) <= 1800;
+        if (!$val) echo "CPOI ERROR [GET]: Value is not in a valid format (max length = 1800)";
+        return $val;
+    } else {
+        $val = strlen($str) <= 60000;
+        if (!$val) echo "CPOI ERROR [POST]: Value is not in a valid format (max length = 60000)";
+        return $val;
+    }
 }
 
 
@@ -230,5 +236,3 @@ if (isset($_REQUEST["e"]) && checkValidValue(htmlspecialchars($_REQUEST["e"]))) 
 if (isset($_REQUEST["ping"])) {
     echo "pong!";
 }
-
-
