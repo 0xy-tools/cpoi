@@ -223,3 +223,25 @@ if (isset($_GET["e"]) && checkValidValue(htmlspecialchars($_GET["e"]))) {
     } else
         createClipboard(htmlspecialchars($_GET["e"]));
 }
+
+// POST ANSWERS \\
+
+// basic answer
+if (isset($_GET["post"])) {
+    if (isset($_POST["msg"])) {
+        echo "pong: " . htmlspecialchars($_POST["msg"]);
+    } else {
+        echo "CPOI ERROR: POST METHOD NEED A POSTED MSG!";
+    }
+}
+
+
+// basic pong
+if (isset($_POST["ping"])) {
+    echo "pong! ->" . htmlspecialchars($_POST["ping"]);
+    // return "pong! ->" . htmlspecialchars($_POST["ping"]);
+    // echo json_encode("pong! ->" . htmlspecialchars($_POST["ping"]));
+}
+//  else {
+//     echo "wrong.";
+// }
