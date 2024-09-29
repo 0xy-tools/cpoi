@@ -17,6 +17,17 @@ function autoFocus() {
         document.getElementById("dataInput").focus();
 }
 
+function showTerms() {
+    document.getElementById("settings").style.display = "none"
+    document.getElementById("qrGenButton").style.transform = "scale(0)";
+    document.getElementById("easySection").style.display = "none";
+    document.getElementById("settingsSection").style.display = "none";
+    document.getElementById("classicSection").style.display = "none";
+    document.getElementById("qrCodeSection").style.display = "none";
+    document.getElementById("termsSection").style.display = "block";
+    document.getElementById("advancedSection").style.display = "none"
+}
+
 function updtTheme() {
     if (localSettings.theme == "dark") {
         document.documentElement.style.setProperty('--r', '#FE3420');
@@ -83,6 +94,8 @@ function updtLang() {
     document.getElementById("cButton").innerHTML = localSettings.lang == "fr" ? "Copier" : "Copy";
     document.getElementById("pButton").innerHTML = localSettings.lang == "fr" ? "Coller" : "Paste";
     document.getElementById("aButton").innerHTML = localSettings.lang == "fr" ? "Copier/Coller" : "Copy/Paste";
+    document.getElementById("bottomTerms").innerHTML = localSettings.lang == "fr" ? "Conditions Générales d'Utilisation" : "Terms Of Use";
+    
     // advanced
     document.getElementById("settingPost").innerHTML = localSettings.lang == "fr" ? (localSettings.post ? "méthode POST" : "méthode GET") : (localSettings.post ? "POST method" : "GET method");
     document.getElementById("settingConst").innerHTML = localSettings.lang == "fr" ? (localSettings.const ? "Inéditable" : "Agrégeable") : (localSettings.const ? "Uneditable" : "Aggregable");
@@ -168,7 +181,6 @@ function switchMode() {
 
 document.getElementById("settingTimeDelete").addEventListener("click", switchTimeDelete)
 function switchTimeDelete() {
-    console.log("ntm");
     let kv = {};
     if (localSettings.type == "n") {
         kv["type"] = "u";
@@ -212,7 +224,7 @@ function saveInstance() {
 // Initializing and updating all settings
 
 function updateAll() {
-    console.log(localSettings);
+    // console.log(localSettings);
     updtLang();
     updtTheme();
     INPUT_MAX_LENGTH = localSettings.post ? AGGREGATE_MAX_LENGTH : (localSettings.const ? DEFAULT_MAX_LENGTH : AGGREGATE_MAX_LENGTH);

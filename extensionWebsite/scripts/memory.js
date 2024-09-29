@@ -27,7 +27,7 @@ function get(key, callback = (values) => { }) {
  * @returns nothing
  */
 function set(kvObject, callback = () => { }) {
-    console.log(kvObject);
+    // console.log(kvObject);
     if (typeof kvObject == "object") {
         for (const key in kvObject) {
             localStorage.setItem(key, kvObject[key]);
@@ -57,15 +57,25 @@ function removeAll(callback = () => { }) {
 
 function getAll(callback = () => { }) {
     get(["tou", "theme", "lang", "mode", "instance", "type", "const", "post"], (values) => {
-        // console.log(values);
-        if (values["tou"] === undefined) values.tou = false;
+        // console.log("before", values);
+        if (values["tou"] === null)
+            values.tou = false;
+        else
+            values.tou = values["tou"] == "true" ? true : false;
         if (!values["theme"]) values.theme = "dark";
         if (!values["lang"]) values.lang = "en";
         if (!values["mode"]) values.mode = "easy";
         if (!values["type"]) values.type = "n";
-        if (values["const"] === undefined) values.const = true;
-        if (values["post"] === undefined) values.post = true;
+        if (values["const"] === null)
+            values.const = true;
+        else
+            values.const = values["const"] == "true" ? true : false;
+        if (values["post"] === null)
+            values.post = true;
+        else
+            values.post = values["post"] == "true" ? true : false;
         if (!values["instance"]) values.instance = "https://cpoi.softplus.fr/";
+        // console.log("after", values);
         localSettings = values;
         callback();
     });
