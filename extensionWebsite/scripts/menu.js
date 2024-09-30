@@ -82,8 +82,8 @@ function updateAndClipboardCopy(obj, rawValue, isCode = false) {
     if (isCode) {
         document.getElementById("qrcode").innerHTML = "";
         document.getElementById("qrGenButton").style.transform = "scale(1)";
-        new QRCode(document.getElementById("qrcode"), `${localSettings.instance}?qr=1&l=${localSettings.lang}&e=${urlEncode(value)}`);
-        document.getElementById("qrValue").innerHTML = `${localSettings.instance}?qr=1&l=${localSettings.lang}&e=${urlEncode(value)}`;
+        new QRCode(document.getElementById("qrcode"), `${localSettings.instance}?qr=1&p=${urlEncode(value)}`);
+        document.getElementById("qrValue").innerHTML = `${localSettings.instance}?qr=1&p=${urlEncode(value)}`;
     }
 }
 
