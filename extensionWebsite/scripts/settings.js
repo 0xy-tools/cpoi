@@ -2,11 +2,17 @@ const DEFAULT_MAX_LENGTH = 1700;
 const AGGREGATE_MAX_LENGTH = 60000;
 
 function home() {
+    document.getElementById("settings").style.display = "block"
+    document.getElementById("settings").innerHTML = "⚙";
+    
+    document.getElementById("footerLinkContainer").style.display = "block";
     document.getElementById("easySection").style.display = localSettings.mode == "easy" ? "block" : "none";
     document.getElementById("settingsSection").style.display = "none";
     document.getElementById("classicSection").style.display = localSettings.mode == "easy" ? "none" : "block";
     document.getElementById("qrCodeSection").style.display = "none";
     document.getElementById("termsSection").style.display = "none";
+    document.getElementById("topBackPolicy").style.display = "none";
+    document.getElementById("policySection").style.display = "none";
     document.getElementById("advancedSection").style.display = localSettings.mode == "advanced" ? "block" : "none";
 }
 
@@ -18,7 +24,9 @@ function autoFocus() {
 }
 
 function showTerms() {
-    document.getElementById("settings").style.display = "none"
+    document.getElementById("topBackPolicy").style.display = "none";
+    document.getElementById("policySection").style.display = "none";
+    document.getElementById("settings").style.display = "none";
     document.getElementById("qrGenButton").style.transform = "scale(0)";
     document.getElementById("easySection").style.display = "none";
     document.getElementById("settingsSection").style.display = "none";
@@ -26,6 +34,24 @@ function showTerms() {
     document.getElementById("qrCodeSection").style.display = "none";
     document.getElementById("termsSection").style.display = "block";
     document.getElementById("advancedSection").style.display = "none"
+    document.getElementById("footerLinkContainer").style.display = "none";
+}
+
+function showPrivacy(back = () => {home();}) {
+    document.getElementById("settings").style.display = "none";
+    document.getElementById("qrGenButton").style.transform = "scale(0)";
+    document.getElementById("easySection").style.display = "none";
+    document.getElementById("settingsSection").style.display = "none";
+    document.getElementById("classicSection").style.display = "none";
+    document.getElementById("qrCodeSection").style.display = "none";
+    document.getElementById("termsSection").style.display = "none";
+    document.getElementById("advancedSection").style.display = "none"
+    document.getElementById("topBackPolicy").style.display = "block";
+    document.getElementById("policySection").style.display = "block";
+    document.getElementById("footerLinkContainer").style.display = "none";
+
+    document.getElementById("backFromPolicy").onclick = back;
+    document.getElementById("topBackPolicy").onclick = back;
 }
 
 function updtTheme() {
@@ -95,6 +121,7 @@ function updtLang() {
     document.getElementById("pButton").innerHTML = localSettings.lang == "fr" ? "Coller" : "Paste";
     document.getElementById("aButton").innerHTML = localSettings.lang == "fr" ? "Copier/Coller" : "Copy/Paste";
     document.getElementById("bottomTerms").innerHTML = localSettings.lang == "fr" ? "Conditions Générales d'Utilisation" : "Terms Of Use";
+    document.getElementById("bottomPrivacy").innerHTML = localSettings.lang == "fr" ? "Politique de confidentialité" : "Privacy Policy";
 
     // advanced
     document.getElementById("settingPost").innerHTML = localSettings.lang == "fr" ? (localSettings.post ? "méthode POST" : "méthode GET") : (localSettings.post ? "POST method" : "GET method");
@@ -146,6 +173,17 @@ function updtLang() {
         document.getElementById("frTerms").style.display = "none";
     }
     document.getElementById("iagreeButton").innerHTML = localSettings.lang == "fr" ? "J'accepte" : "I agree";
+
+    // privacy
+    document.getElementById("privacyH4").innerHTML = localSettings.lang == "fr" ? "Politique de confidentialité" : "Privacy Policy";
+    if (localSettings.lang == "fr") {
+        document.getElementById("frPrivacy").style.display = "block";
+        document.getElementById("enPrivacy").style.display = "none";
+    } else {
+        document.getElementById("enPrivacy").style.display = "block";
+        document.getElementById("frPrivacy").style.display = "none";
+    }
+    document.getElementById("backFromPolicy").innerHTML = localSettings.lang == "fr" ? "Retour" : "Back";
 }
 
 document.getElementById("lang").addEventListener("click", switchLanguage)
@@ -248,7 +286,7 @@ function getQRCode() {
     const addressFinal = window.location.search;
     addressArgs = parseURLParams(addressFinal);
     console.log(addressArgs);
-    if (!addressArgs["qr"]) return;
+    if (!Object.hasOwnProperty("qr")) return; //addressArgs["qr"] === undefined
 
     // uncomment to auto set language
     // if (addressArgs["l"]) set({l:addressArgs["l"]});

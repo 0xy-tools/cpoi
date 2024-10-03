@@ -273,6 +273,7 @@ document.getElementById("settings").addEventListener("click", () => {
         home();
         autoFocus();
     } else {
+        document.getElementById("footerLinkContainer").style.display = "block";
         document.getElementById("settings").innerHTML = "⨯";
         document.getElementById("qrIcon").src = "./images/qrcode.svg";
         inSettings = true;
