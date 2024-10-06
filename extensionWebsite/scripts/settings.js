@@ -286,8 +286,8 @@ function parseURLParams(url) {
 function getQRCode() {
     const addressFinal = window.location.search;
     addressArgs = parseURLParams(addressFinal);
-    console.log(addressArgs);
-    if (!Object.hasOwnProperty("qr")) return; //addressArgs["qr"] === undefined
+    // console.log(addressArgs);
+    if (!addressArgs.hasOwnProperty("qr")) return; //addressArgs["qr"] === undefined
 
     // uncomment to auto set language
     // if (addressArgs["l"]) set({l:addressArgs["l"]});
