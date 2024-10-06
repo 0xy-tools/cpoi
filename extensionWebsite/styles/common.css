@@ -318,6 +318,51 @@ section {
     max-height: 40vh;
 }
 
+/* Get the extension! */
+#getTheExtension {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+}
+
+#getBExt {
+    font-size: small;
+}
+
+#availableOn {
+    display: flex;
+    flex-direction: row;
+}
+
+#availableOn img {
+    height: 40px;
+    transition: all 0.2s;
+}
+
+#availableOn img:hover {
+    filter: brightness(0.9);
+}
+
+#availableOn img:active {
+    filter: brightness(1.5);
+    transform: scale(0.9);
+}
+
+.availChrome {
+    width: calc(4/6*172px);
+}
+
+.availFox {
+    width: calc(40/58*206);
+}
+
+/* Disable on small screens and mobiles */
+@media (pointer:none), (pointer:coarse), screen and (max-width: 450px), (hover: none) {
+    #getTheExtension {
+        display: none;
+    }
+}
+
 /* ----------- SCROLLBAR ----------- */
 
 ::-webkit-scrollbar {

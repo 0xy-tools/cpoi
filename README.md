@@ -5,14 +5,36 @@
 # What is it ?
 It's a tool to simply easily copy and paste over machines.
 
-## Server
+## How to use it ?
 
-You will be able to get the server code here (php/sql).
+You can simply go to [https://cpoi.softplus.fr](https://cpoi.softplus.fr) and start copying your text.
 
-## Client (submodule)
+- Enter your text to copy in the **blue** area.
+- Click <kbd>Copy/Paste</kbd> button
+- Enter the code given in the **orange** area in the browser of your other device or simply flash the qrcode!
 
-There is a command line interface to simply use it from a terminal [cpoi-cli](https://github.com/MagicTINTIN/cpoi-cli). If you only want the CLI, you can clone the [cpoi-cli](https://github.com/MagicTINTIN/cpoi-cli) repo.\
-To clone everything **`git clone --recursive https://github.com/MagicTINTIN/cpoi`** or `git clone https://github.com/MagicTINTIN/cpoi && git submodule update --init`.
+### Submodules
+
+> [!NOTE]
+> To clone the submodules you can 
+> - clone only the independant repos
+> - get the whole CPOI repo with all its submodules using:
+>   - **`git clone --recursive https://github.com/MagicTINTIN/cpoi`**
+>   - `git clone https://github.com/MagicTINTIN/cpoi && git submodule update --init`.
+
+### Web browser extension
+
+An extension is available on chromium-based web browsers!\
+<a href="https://chromewebstore.google.com/detail/cpoi/kdlpjmhiomfnlkgbeghbeocfafggcdof" target="_blank"><img src="extensionWebsite/images/getChrome.png" alt="Get CPOI for chromium"></a>\
+You can directly clone the [cpoi-extension repo](https://github.com/MagicTINTIN/cpoi-extension).
+
+### Client (submodule)
+
+There is a command line interface to simply use it from a terminal [cpoi-cli](https://github.com/MagicTINTIN/cpoi-cli). If you only want the CLI, you can clone the [cpoi-cli repo](https://github.com/MagicTINTIN/cpoi-cli).
+
+## Create your own server
+
+You will be able to get the server code here (php/sql) in order to create your own instance.
 
 ---
 # Available requests

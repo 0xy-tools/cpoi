@@ -185,6 +185,9 @@ function updtLang() {
         document.getElementById("frPrivacy").style.display = "none";
     }
     document.getElementById("backFromPolicy").innerHTML = localSettings.lang == "fr" ? "Retour" : "Back";
+
+    // get the extensions
+    document.getElementById("getBExt").innerHTML = localSettings.lang == "fr" ? "Installez l'extension !" : "Get the browser extension!";
 }
 
 document.getElementById("lang").addEventListener("click", switchLanguage)
