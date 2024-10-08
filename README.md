@@ -1,9 +1,9 @@
-# CPOI
-> Copy Paste Over Internet
-> ![CPOI logo](./assets/logo.png)<br>
+
+<img src="./assets/cpoiGithubCard.jpg" alt="CPOI card"/>
+
 ---
-# What is it ?
-It's a tool to simply easily copy and paste over machines.
+# CPOI ? What is it ?
+CPOI is a tool that allows you to copy and paste text between your different devices using web browser/extension and cli. Simple and fast to use, no sign-up or account is required.
 
 ## How to use it ?
 
@@ -11,7 +11,13 @@ You can simply go to [https://cpoi.softplus.fr](https://cpoi.softplus.fr) and st
 
 - Enter your text to copy in the **blue** area.
 - Click <kbd>Copy/Paste</kbd> button
-- Enter the code given in the **orange** area in the browser of your other device or simply flash the qrcode!
+<img src="assets/tutoCopy.png" alt="Copy your text and get your code">
+- Enter the code given in the **orange** area in your other device!
+<img src="assets/tutoPaste.png" alt="Pasting on a second device using the code">
+
+> [!NOTE]
+> You can use the QRCode icon <img src="extensionWebsite/images/qrcode.svg" alt="QRCode icon" width="15px"> to simply copy it on your smartphone by scanning a QRCode.
+> <img src="assets/tutoQRCode.png" alt="Scan your QRCode" width="50%">
 
 ### Submodules
 
@@ -22,10 +28,11 @@ You can simply go to [https://cpoi.softplus.fr](https://cpoi.softplus.fr) and st
 >   - **`git clone --recursive https://github.com/MagicTINTIN/cpoi`**
 >   - `git clone https://github.com/MagicTINTIN/cpoi && git submodule update --init`.
 
-### Web browser extension
-
-An extension is available on chromium-based web browsers!\
-<a href="https://chromewebstore.google.com/detail/cpoi/kdlpjmhiomfnlkgbeghbeocfafggcdof" target="_blank"><img src="extensionWebsite/images/getChrome.png" alt="Get CPOI for chromium"></a>\
+### Web browser extension (submodule)
+<img src="./assets/logo.png" alt="CPOI logo" width="150"/>\
+Available on Firefox and Chromium-based web browsers!\
+<a href="https://addons.mozilla.org/en-US/firefox/addon/cpoi/" target="_blank"><img src="extensionWebsite/images/getFirefox.png" alt="Get CPOI for Firefox"></a>
+<a href="https://chromewebstore.google.com/detail/cpoi/kdlpjmhiomfnlkgbeghbeocfafggcdof" target="_blank"><img src="extensionWebsite/images/getChrome.png" alt="Get CPOI for Chromium"></a>\
 You can directly clone the [cpoi-extension repo](https://github.com/MagicTINTIN/cpoi-extension).
 
 ### Client (submodule)
