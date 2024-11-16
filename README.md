@@ -7,7 +7,7 @@ CPOI is a tool that allows you to copy and paste text between your different dev
 
 ## How to use it ?
 
-You can simply go to [https://cpoi.softplus.fr](https://cpoi.softplus.fr) and start copying your text.
+You can simply go to [https://cpoi.magictintin.fr](https://cpoi.magictintin.fr) and start copying your text.
 
 - Enter your text to copy in the **blue** area.
 - Click <kbd>Copy/Paste</kbd> button
