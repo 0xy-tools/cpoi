@@ -293,7 +293,7 @@ document.getElementById("qrGenButton").addEventListener("click", () => {
         home();
     } else {
         document.getElementById("settings").innerHTML = "⚙";
-        document.getElementById("qrIcon").src = "./images/cross.svg";
+        document.getElementById("qrIcon").src = "./extensionWebsite/images/cross.svg";
         inQrcode = true;
         inSettings = false;
         document.getElementById("settingsSection").style.display = "none";
