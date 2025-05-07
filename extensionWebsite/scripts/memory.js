@@ -1,3 +1,13 @@
+/**
+ * tou : terms of use not accepted
+ * theme : light|dark
+ * lang : fr|en
+ * mode : classic|easy|advanced
+ * instance : https://cpoi.0xy.fr/
+ * type : u|n|s|l
+ * const : Uneditable mode
+ * post : POST method (else GET)
+ */
 let localSettings;
 
 /**
@@ -74,7 +84,7 @@ function getAll(callback = () => { }) {
             values.post = true;
         else
             values.post = values["post"] == "true" ? true : false;
-        if (!values["instance"]) values.instance = "https://cpoi.magictintin.fr/";
+        if (!values["instance"]) values.instance = "https://cpoi.0xy.fr/";
         // console.log("after", values);
         localSettings = values;
         callback();

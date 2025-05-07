@@ -271,11 +271,11 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
     <meta property="og:title" content="CPOI">
     <meta property="og:description" content="Copy Paste Over Internet tool">
 
-    <meta property="og:image" content="https://cpoi.magictintin.fr/extensionWebsite/images/favicon.png">
+    <meta property="og:image" content="https://cpoi.0xy.fr/extensionWebsite/images/favicon.png">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:alt" content="Logo of CPOI">
 
-    <meta property="og:url" content="https://cpoi.magictintin.fr/" />
+    <meta property="og:url" content="https://cpoi.0xy.fr/" />
     <meta data-react-helmet="true" name="theme-color" content="#207DFE" />
 </head>
 
