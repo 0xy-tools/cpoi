@@ -28,7 +28,7 @@ function encodeHTMLEntities(text) {
 const regex = /^[a-z]{1,6}\-[a-z]{1,6}\-[a-z]{1,6}$/;
 let lastStringRequest = "";
 let lastCode = "";
-let INPUT_MAX_LENGTH = 1800;
+let INPUT_MAX_LENGTH = localSettings.post ? AGGREGATE_MAX_LENGTH : (localSettings.const ? DEFAULT_MAX_LENGTH : AGGREGATE_MAX_LENGTH);;
 
 function setError(idObj, message) {
     document.getElementById(idObj).innerHTML = message;
