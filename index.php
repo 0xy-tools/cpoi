@@ -283,11 +283,12 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
                 "@context": "https://schema.org",
                 "@type": "WebSite",
                 "name": "CPOI",
+                "alternateName" : ["cpoi","copy paste over internet","c0xy"],
                 "url": "https://cpoi.0xy.fr/",
                 "inLanguage": "en",
                 "isAccessibleForFree": "true",
                 "isFamilyFriendly": "true",
-                "license": "https://raw.githubusercontent.com/MagicTINTIN/cpoi/refs/heads/main/LICENSE",
+                "license": "https://raw.githubusercontent.com/0xy-tools/cpoi/refs/heads/main/LICENSE",
                 "isPartOf": "https://0xy.fr/",
                 "keywords": "copy, paste, online, devices",
                 "description": "CPOI is a service/browser extension that allows you to copy and paste text between your different devices.\nSimple and fast to use, no sign-up or account required.",
@@ -299,11 +300,12 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
                 "@context": "https://schema.org",
                 "@type": "WebSite",
                 "name": "CPOI",
+                "alternateName" : ["cpoi","copy paste over internet","c0xy"],
                 "url": "https://cpoi.0xy.fr/",
                 "inLanguage": "fr",
                 "isAccessibleForFree": "true",
                 "isFamilyFriendly": "true",
-                "license": "https://raw.githubusercontent.com/MagicTINTIN/cpoi/refs/heads/main/LICENSE",
+                "license": "https://raw.githubusercontent.com/0xy-tools/cpoi/refs/heads/main/LICENSE",
                 "isPartOf": "https://0xy.fr/",
                 "keywords": "copier, coller, en ligne, appareils",
                 "description": "CPOI est un service/extension navigateur vous permettant de copier coller du texte entre vos différents appareils.\nSimple et rapide à utiliser, pas de compte ni d'enregistrement nécessaire.",
@@ -319,7 +321,7 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
                 "applicationCategory": "UtilitiesApplication",
                 "featureList": "CPOI is a service/browser extension that allows you to copy and paste text between your different devices.\nSimple and fast to use, no sign-up or account required.",
                 "url": "https://cpoi.0xy.fr/",
-                "license": "https://raw.githubusercontent.com/MagicTINTIN/cpoi/refs/heads/main/LICENSE",
+                "license": "https://raw.githubusercontent.com/0xy-tools/cpoi/refs/heads/main/LICENSE",
                 "offers": {
                     "@type": "Offer",
                     "price": 0
@@ -406,7 +408,7 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
                 </div>
                 <div class="settingsDiv">
                     <h6>Instance</h6>
-                    <input type="text" value="https://cpoi.magictintin.fr" class="inputSettings" id="settingInstance" readonly="readonly">
+                    <input type="text" value="https://cpoi.0xy.fr" class="inputSettings" id="settingInstance" readonly="readonly">
                 </div>
                 <div class="btnCentering"><button class="tbtn pbtn" id="saveSettings">Save</button></div>
 
@@ -445,7 +447,7 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
                     compliance with applicable laws. The Service is provided under the GPL v3.0 license, meaning anyone is
                     free to create their own instance of the Service. You can access the project's source code and
                     contribute via the following link: <a class="licenseLink"
-                        href="https://github.com/MagicTINTIN/cpoi">https://github.com/MagicTINTIN/cpoi</a>.<br>
+                        href="https://github.com/0xy-tools/cpoi">https://github.com/0xy-tools/cpoi</a>.<br>
                     <br>
                     <h5>4. Security Recommendations</h5>
                     We strongly advise users not to share personal sensitive data, such as passwords, when using the
@@ -493,7 +495,7 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
                     The Service is an open-source project under the GPL v3.0 license. The source code is publicly available,
                     and anyone is free to create their own instance of the Service, modify it, and redistribute it under the
                     same license terms. You can access the project repository here: <a class="licenseLink"
-                        href="https://github.com/MagicTINTIN/cpoi">https://github.com/MagicTINTIN/cpoi</a>.<br>
+                        href="https://github.com/0xy-tools/cpoi">https://github.com/0xy-tools/cpoi</a>.<br>
                     <br>
                     <h5>7. Service and TOU Modifications</h5>
                     We reserve the right to modify, suspend, or discontinue all or part of the Service at any time without
@@ -529,7 +531,7 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
                     légitimes et dans le respect des lois applicables. Le Service est fourni sous licence GPL v3.0, ce qui
                     signifie que chacun est libre de créer sa propre instance du Service. Vous pouvez accéder au code source
                     du projet et contribuer via le lien suivant : <a class="licenseLink"
-                        href="https://github.com/MagicTINTIN/cpoi">https://github.com/MagicTINTIN/cpoi</a>.<br>
+                        href="https://github.com/0xy-tools/cpoi">https://github.com/0xy-tools/cpoi</a>.<br>
                     <br>
                     <h5>4. Recommandations de sécurité</h5>
                     Nous incitons fortement les utilisateurs à ne pas partager de données personnelles sensibles, telles que
@@ -579,7 +581,7 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
                     Le Service est un projet open source sous licence GPL v3.0. Le code source est disponible publiquement
                     et chacun est libre de créer sa propre instance du Service, de le modifier, et de le redistribuer sous
                     les mêmes termes de la licence. Vous pouvez accéder au dépôt du projet ici : <a class="licenseLink"
-                        href="https://github.com/MagicTINTIN/cpoi">https://github.com/MagicTINTIN/cpoi</a>.<br>
+                        href="https://github.com/0xy-tools/cpoi">https://github.com/0xy-tools/cpoi</a>.<br>
                     <br>
                     <h5>7. Modifications du Service et des CGU</h5>
                     Nous nous réservons le droit de modifier, suspendre ou interrompre temporairement ou définitivement tout
@@ -674,8 +676,8 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
                 </article>
                 <div class="btnCentering"><button class="tbtn pbtn" id="backFromPolicy" onclick="home()">Back</button></div>
             </section>
-            <p id="footerLinkContainer"><a tabindex="-1" href="https://cpoi.magictintin.fr"
-                    class="bottomLink">cpoi.magictintin.fr</a> | <a href="" onclick="showTerms(); return false;"
+            <p id="footerLinkContainer"><a tabindex="-1" href="https://cpoi.0xy.fr"
+                    class="bottomLink">cpoi.0xy.fr</a> | <a href="" onclick="showTerms(); return false;"
                     class="bottomLink" id="bottomTerms">Terms Of Use</a> | <a href="" onclick="showPrivacy(); return false;"
                     class="bottomLink" id="bottomPrivacy">Privacy Policy</a>
             </p>
