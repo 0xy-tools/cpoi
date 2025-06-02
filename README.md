@@ -7,7 +7,7 @@ CPOI is a tool that allows you to copy and paste text between your different dev
 
 ## How to use it ?
 
-You can simply go to [https://cpoi.magictintin.fr](https://cpoi.magictintin.fr) and start copying your text.
+You can simply go to [https://cpoi.0xy.fr](https://cpoi.0xy.fr) and start copying your text.
 
 - Enter your text to copy in the **blue** area.
 - Click <kbd>Copy/Paste</kbd> button
@@ -25,19 +25,19 @@ You can simply go to [https://cpoi.magictintin.fr](https://cpoi.magictintin.fr) 
 > To clone the submodules you can 
 > - clone only the independant repos
 > - get the whole CPOI repo with all its submodules using:
->   - **`git clone --recursive https://github.com/MagicTINTIN/cpoi`**
->   - `git clone https://github.com/MagicTINTIN/cpoi && git submodule update --init`.
+>   - **`git clone --recursive https://github.com/0xy-tools/cpoi`**
+>   - `git clone https://github.com/0xy-tools/cpoi && git submodule update --init`.
 
 ### Web browser extension (submodule)
 <img src="./assets/logo.png" alt="CPOI logo" width="150"/>\
 Available on Firefox and Chromium-based web browsers!\
 <a href="https://addons.mozilla.org/en-US/firefox/addon/cpoi/" target="_blank"><img src="extensionWebsite/images/getFirefox.png" alt="Get CPOI for Firefox"></a>
 <a href="https://chromewebstore.google.com/detail/cpoi/kdlpjmhiomfnlkgbeghbeocfafggcdof" target="_blank"><img src="extensionWebsite/images/getChrome.png" alt="Get CPOI for Chromium"></a>\
-You can directly clone the [cpoi-extension repo](https://github.com/MagicTINTIN/cpoi-extension).
+You can directly clone the [cpoi-extension repo](https://github.com/0xy-tools/cpoi-extension).
 
 ### Client (submodule)
 
-There is a command line interface to simply use it from a terminal [cpoi-cli](https://github.com/MagicTINTIN/cpoi-cli). If you only want the CLI, you can clone the [cpoi-cli repo](https://github.com/MagicTINTIN/cpoi-cli).
+There is a command line interface to simply use it from a terminal [cpoi-cli](https://github.com/0xy-tools/cpoi-cli). If you only want the CLI, you can clone the [cpoi-cli repo](https://github.com/0xy-tools/cpoi-cli).
 
 ## Create your own server
 
