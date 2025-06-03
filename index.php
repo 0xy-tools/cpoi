@@ -263,13 +263,14 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
         <title>CPOI</title>
 
         <meta name="author" content="MagicTINTIN">
-        <meta name="description" content="CPOI is a service/browser extension that allows you to copy and paste text between your different devices.\nSimple and fast to use, no sign-up or account required.">
+        <meta name="description" content="CPOI is a service/browser extension that allows you to copy and paste text between your different devices. Simple and fast to use, no sign-up or account required.">
 
         <link rel="icon" type="image/x-icon" href="extensionWebsite/images/favicon.png">
 
         <meta property="og:type" content="website" />
         <meta property="og:title" content="CPOI">
-        <meta property="og:description" content="CPOI is a service/browser extension that allows you to copy and paste text between your different devices.\nSimple and fast to use, no sign-up or account required.">
+        <meta property="og:site_name" content="0xy.fr">
+        <meta property="og:description" content="CPOI is a service/browser extension that allows you to copy and paste text between your different devices. Simple and fast to use, no sign-up or account required.">
 
         <meta property="og:image" content="https://cpoi.0xy.fr/extensionWebsite/images/favicon.png">
         <meta property="og:image:type" content="image/png">
@@ -283,16 +284,15 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
                 "@context": "https://schema.org",
                 "@type": "WebSite",
                 "name": "CPOI",
-                "alternateName" : ["cpoi","copy paste over internet","c0xy"],
+                "alternateName" : ["cpoi","copy paste over internet","c0xy", "Copy Paste Over Internet"],
                 "url": "https://cpoi.0xy.fr/",
                 "inLanguage": "en",
                 "isAccessibleForFree": "true",
                 "isFamilyFriendly": "true",
                 "license": "https://raw.githubusercontent.com/0xy-tools/cpoi/refs/heads/main/LICENSE",
                 "isPartOf": "https://0xy.fr/",
-                "keywords": "copy, paste, online, devices",
-                "description": "CPOI is a service/browser extension that allows you to copy and paste text between your different devices.\nSimple and fast to use, no sign-up or account required.",
-                "alternateName": "Copy Paste Over Internet"
+                "keywords": "copy, paste, online, devices, copy-paste",
+                "description": "CPOI is a service/browser extension that allows you to copy and paste text between your different devices.\nSimple and fast to use, no sign-up or account required."
             }
         </script>
         <script type="application/ld+json">
@@ -300,16 +300,15 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
                 "@context": "https://schema.org",
                 "@type": "WebSite",
                 "name": "CPOI",
-                "alternateName" : ["cpoi","copy paste over internet","c0xy"],
+                "alternateName" : ["cpoi","copy paste over internet","c0xy", "Copy Paste Over Internet"],
                 "url": "https://cpoi.0xy.fr/",
                 "inLanguage": "fr",
                 "isAccessibleForFree": "true",
                 "isFamilyFriendly": "true",
                 "license": "https://raw.githubusercontent.com/0xy-tools/cpoi/refs/heads/main/LICENSE",
                 "isPartOf": "https://0xy.fr/",
-                "keywords": "copier, coller, en ligne, appareils",
-                "description": "CPOI est un service/extension navigateur vous permettant de copier coller du texte entre vos différents appareils.\nSimple et rapide à utiliser, pas de compte ni d'enregistrement nécessaire.",
-                "alternateName": "Copy Paste Over Internet"
+                "keywords": "copier, coller, en ligne, appareils, copier-coller",
+                "description": "CPOI est un service/extension navigateur vous permettant de copier coller du texte entre vos différents appareils.\nSimple et rapide à utiliser, pas de compte ni d'enregistrement nécessaire."
             }
         </script>
         <script type="application/ld+json">
