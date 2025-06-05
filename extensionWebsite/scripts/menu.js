@@ -95,7 +95,7 @@ function recursiveSend(ret, contents, code = "") {
     if (contents.length > 0) {
         let req = "";
         if (code == "")
-            req = `${localSettings.instance}?l=${lang}&t=${localSettings.type}&c=${contents.shift()}`;
+            req = `${localSettings.instance}?l=${localSettings.lang}&t=${localSettings.type}&c=${contents.shift()}`;
         else
             req = `${localSettings.instance}?a=${code}:${contents.shift()}`;
 

@@ -94,11 +94,13 @@ function recursiveSend(ret, contents, code = "") {
     // }
     if (contents.length > 0) {
         let req = "";
+        
         if (code == "")
-            req = `./?l=${lang}&t=${localSettings.type}&c=${contents.shift()}`;
+            req = `./?l=${localSettings.lang}&t=${localSettings.type}&c=${contents.shift()}`;
         else
-            req = `./?a=${code}:${contents.shift()}`;
-
+        req = `./?a=${code}:${contents.shift()}`;
+    
+        // console.log(req);
         setTempPopUp(true, localSettings.lang == "fr" ? "Envoi en cours..." : "Sending...", localSettings.lang == "fr" ? `${contents.length} fragments restants` : `${contents.length} fragments left`)
         fetch(req)
             .then(response => response.text())
