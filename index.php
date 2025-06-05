@@ -40,6 +40,95 @@ function checkValidValue(string $str): bool
     }
 }
 
+function createStat($code, $lang, $durationMode, $currentSize, $reqType): void
+{
+    global $db;
+    $now = date("Y-m-d H:i:s");
+    // code, app, lang, cPushGet, cPushPost, pPullGet, pPullPost, cPushExt, cPushUIMode, pPullExt, pPullUIMode, durationMode, createdAt, lastPPullAt, feedback, maxSize, totalSize
+    $sqlQuery = 'INSERT INTO stats(code, app, lang, cPushPost, durationMode, createdAt, maxSize, totalSize) VALUES (:code, 1, :lang, 1, :durationMode, :createdAt, :currentSize, :currentSize)';
+
+
+    if ($reqType === 'GET')
+        $sqlQuery = 'INSERT INTO stats(code, app, lang, cPushGet, durationMode, createdAt, maxSize, totalSize) VALUES (:code, 1, :lang, 1, :durationMode, :createdAt, :currentSize, :currentSize)';
+
+    $insertStats = $db->prepare($sqlQuery);
+    $insertStats->execute([
+        'code' => $code,
+        'lang' => $lang,
+        'durationMode' => $durationMode,
+        'createdAt' => $now,
+        'currentSize' => $currentSize
+    ]);
+}
+
+function updateStatAggregate($code, $currentSize, $reqType): void
+{
+    global $db;
+    // code, app, lang, cPushGet, cPushPost, pPullGet, pPullPost, cPushExt, cPushUIMode, pPullExt, pPullUIMode, durationMode, createdAt, lastPPullAt, feedback, maxSize, totalSize
+    $idQuery = 'SELECT ID FROM stats WHERE code = :code AND app = 1 ORDER BY ID DESC LIMIT 1';
+    $stmt = $db->prepare($idQuery);
+    $stmt->execute(['code' => $code]);
+    $lastRow = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($lastRow) {
+        $ID = $lastRow['ID'];
+
+        $updateQuery = '
+            UPDATE stats
+            SET cPushPost = cPushPost + 1,
+                maxSize = :currentSize,
+                totalSize = :currentSize
+            WHERE ID = :ID
+        ';
+        if ($reqType === 'GET')
+            $updateQuery = '
+            UPDATE stats
+            SET cPushGet = cPushGet + 1,
+                maxSize = :currentSize,
+                totalSize = :currentSize
+            WHERE ID = :ID
+        ';
+
+        $updateStmt = $db->prepare($updateQuery);
+        $updateStmt->execute([
+            'currentSize' => $currentSize,
+            'ID' => $ID
+        ]);
+    }
+}
+
+function updateStatPaste($code, $reqType): void
+{
+    global $db;
+    // code, app, lang, cPushGet, cPushPost, pPullGet, pPullPost, cPushExt, cPushUIMode, pPullExt, pPullUIMode, durationMode, createdAt, lastPPullAt, feedback, maxSize, totalSize
+    $idQuery = 'SELECT ID FROM stats WHERE code = :code AND app = 1 ORDER BY ID DESC LIMIT 1';
+    $stmt = $db->prepare($idQuery);
+    $stmt->execute(['code' => $code]);
+    $lastRow = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($lastRow) {
+        $ID = $lastRow['ID'];
+
+        $updateQuery = '
+            UPDATE stats
+            SET pPullPost = pPullPost + 1,
+                lastPPullAt = current_timestamp()
+            WHERE ID = :ID
+        ';
+        if ($reqType === 'GET')
+            $updateQuery = '
+            UPDATE stats
+            SET pPullGet = pPullGet + 1,
+                lastPPullAt = current_timestamp()
+            WHERE ID = :ID
+        ';
+
+        $updateStmt = $db->prepare($updateQuery);
+        $updateStmt->execute([
+            'ID' => $ID
+        ]);
+    }
+}
 
 function passiveClean(): void
 {
@@ -106,6 +195,9 @@ function createClipboard(string $content, string $type = ""): void
             $codeGen = true;
     }
 
+    // if (isset($_REQUEST["l"]))
+    //     $codeVal = htmlspecialchars($_REQUEST["l"]) . substr($codeVal, 2);
+
     $sqlQuery = 'INSERT INTO cpoi(info, type, code, value) VALUES (:info, :type, :code, :value)';
 
     $insertCPoi = $db->prepare($sqlQuery);
@@ -115,6 +207,10 @@ function createClipboard(string $content, string $type = ""): void
         'value' => $content,
         'code' => $codeVal
     ]);
+    $statL = 0;
+    if (isset($_REQUEST["l"]) && htmlspecialchars($_REQUEST["l"]) == "fr")
+        $statL = 1;
+    createStat($codeVal, $statL, $type, strlen($content), $_SERVER['REQUEST_METHOD']);
     optEcho($codeVal);
     exit;
 }
@@ -163,6 +259,7 @@ if (isset($_REQUEST["a"]) && checkValidValue(htmlspecialchars($_REQUEST["a"]))) 
         'code' => $code,
         'value' => $newValue
     ]);
+    updateStatAggregate($code, strlen($newValue), $_SERVER['REQUEST_METHOD']);
     optEcho($updateCpoi->rowCount());
 }
 
@@ -210,6 +307,7 @@ function pasting(string $input): int
     if (sizeof($codes) == 0) {
         return 1;
     } else {
+        updateStatPaste($input, $_SERVER['REQUEST_METHOD']);
         if ($codes[0]["type"] == "u") {
             deleteClipboard($input);
         }
@@ -284,7 +382,7 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
                 "@context": "https://schema.org",
                 "@type": "WebSite",
                 "name": "CPOI",
-                "alternateName" : ["cpoi","copy paste over internet","c0xy", "Copy Paste Over Internet"],
+                "alternateName": ["cpoi", "copy paste over internet", "c0xy", "Copy Paste Over Internet"],
                 "url": "https://cpoi.0xy.fr/",
                 "inLanguage": "en",
                 "isAccessibleForFree": "true",
@@ -300,7 +398,7 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
                 "@context": "https://schema.org",
                 "@type": "WebSite",
                 "name": "CPOI",
-                "alternateName" : ["cpoi","copy paste over internet","c0xy", "Copy Paste Over Internet"],
+                "alternateName": ["cpoi", "copy paste over internet", "c0xy", "Copy Paste Over Internet"],
                 "url": "https://cpoi.0xy.fr/",
                 "inLanguage": "fr",
                 "isAccessibleForFree": "true",
@@ -316,7 +414,7 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
                 "@context": "https://schema.org",
                 "@type": "SoftwareApplication",
                 "name": "CPOI",
-                "applicationSuite":"0xy",
+                "applicationSuite": "0xy",
                 "applicationCategory": "UtilitiesApplication",
                 "featureList": "CPOI is a service/browser extension that allows you to copy and paste text between your different devices.\nSimple and fast to use, no sign-up or account required.",
                 "url": "https://cpoi.0xy.fr/",
@@ -615,7 +713,9 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
                     data is
                     transmitted to our server and temporarily stored for the duration chosen by the user (from immediate
                     deletion after pasting up to a maximum of 12 hours). Once this time has expired, the data is
-                    automatically deleted. We do not collect or retain any personal or sensitive information.<br>
+                    automatically deleted. We do not collect or retain any personal or sensitive information.
+                    Only some anonymous statistics like copy/paste numbers, size of the clipboard and dates are collected
+                    in order to better understand how the service is used and to improve it.<br>
                     <br>
                     <h5>Data Sharing</h5>
                     The data transmitted through the extension is not shared with any third parties. It is strictly used to
@@ -646,7 +746,9 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
                     données copiées sont transmises à notre serveur uniquement pour être temporairement stockées pendant la
                     durée choisie par l'utilisateur (allant de suppression immédiate après collage jusqu'à un maximum de 12
                     heures). Une fois ce délai expiré, les données sont automatiquement supprimées. Nous ne collectons ni ne
-                    conservons d'informations personnelles ou sensibles.<br>
+                    conservons d'informations personnelles ou sensibles.
+                    Uniquement quelques statistiques anonumes comme le nombre de copier/coller, la taille du presse-papier
+                    et les dates sont collectées dans le but de comprendre comment le service est utilisé et pour l'améliorer.<br>
                     <br>
                     <h5>Partage des données</h5>
                     Les données transmises via l'extension ne sont partagées avec aucune tierce partie. Elles sont
