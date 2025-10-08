@@ -204,7 +204,7 @@ function createClipboard(string $content, string $type = ""): void
     $insertCPoi->execute([
         'info' => $moreinfo,
         'type' => $type,
-        'value' => $content,
+        'value' => htmlspecialchars($content),
         'code' => $codeVal
     ]);
     $statL = 0;
