@@ -94,12 +94,12 @@ function recursiveSend(ret, contents, code = "") {
     // }
     if (contents.length > 0) {
         let req = "";
-        
+
         if (code == "")
             req = `./?l=${localSettings.lang}&t=${localSettings.type}&c=${contents.shift()}`;
         else
-        req = `./?a=${code}:${contents.shift()}`;
-    
+            req = `./?a=${code}:${contents.shift()}`;
+
         // console.log(req);
         setTempPopUp(true, localSettings.lang == "fr" ? "Envoi en cours..." : "Sending...", localSettings.lang == "fr" ? `${contents.length} fragments restants` : `${contents.length} fragments left`)
         fetch(req)
@@ -168,20 +168,27 @@ function getCodeFromCPOI(ret, mode, content, lang = 'en') {
 function getClipboardFromCPOI(ret, code) {
     if (code == '' || regex.test(code) == false) return setError("codeInputInfo", `"${code}" ${localSettings.lang == "fr" ? "ne ressemble pas à un code valide" : "doesn't look like a valid code"}`);
     if (localSettings.post == false) {
-        fetch(`./?p=${code}`)
+        fetch(`./?p=${code}${append_connected_info()}`)
             .then(response => response.text())
             .then(text => {
                 updateAndClipboardCopy(ret, text.startsWith("\n") ? text.slice(1) : text);
             });
     } else {
+        body = new URLSearchParams({
+            'p': code
+        })
+        if (is_connected_info())
+            body = new URLSearchParams({
+                'p': code,
+                'connected': 'yes'
+            })
+
         fetch(`./index.php`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: new URLSearchParams({
-                'p': code
-            })
+            body: body
         })
             .then(response => response.text())
             .then(text => {
@@ -208,7 +215,7 @@ function getEasyFromCPOI(ret, content, lang = 'en') {
         // console.log(`${localSettings.instance}?l=${lang}&t=${localSettings.type}${localSettings.const ? "&m=const" : ""}&e=${content}`);
         // console.log(`${localSettings.instance}?${lang}&e=${urlEncode(content)}`);
         if (content.length <= DEFAULT_MAX_LENGTH)
-            fetch(`./?l=${lang}&t=${localSettings.type}&e=${content}`)
+            fetch(`./?l=${lang}&t=${localSettings.type}&e=${content}${append_connected_info()}`)
                 .then(response => response.text())
                 .then(text => {
                     if (regex.test(text.startsWith("\n") ? text.slice(1) : text))
@@ -219,17 +226,27 @@ function getEasyFromCPOI(ret, content, lang = 'en') {
                 });
         else recursiveSend(ret, chunkString(content, DEFAULT_MAX_LENGTH));
     } else {
+        body = new URLSearchParams({
+            'l': lang,
+            't': localSettings.type,
+            'e': content,
+            'm': `post;${localSettings.const ? "const" : ""}`
+        });
+        if (is_connected_info())
+            body = new URLSearchParams({
+                'l': lang,
+                't': localSettings.type,
+                'e': content,
+                'm': `post;${localSettings.const ? "const" : ""}`,
+                'connected': 'yes'
+            });
+
         fetch(`./index.php`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: new URLSearchParams({
-                'l': lang,
-                't': localSettings.type,
-                'e': content,
-                'm': `post;${localSettings.const ? "const" : ""}`
-            })
+            body: body
         })
             .then(response => response.text())
             .then(text => {

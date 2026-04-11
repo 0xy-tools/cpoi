@@ -8,6 +8,9 @@ include_once("../db.php");
 include_once("includes/utils.php");
 $db = dbConnect();
 
+if (isset($_REQUEST["connected"]) && $_REQUEST["connected"] == "yes")
+    include_once("cestmoi/main.php");
+
 function optEcho(string $str): void
 {
     if (!isset($_REQUEST["qr"]))
@@ -312,6 +315,13 @@ function pasting(string $input): int
             deleteClipboard($input);
         }
 
+        if (isset($_REQUEST["connected"]) && $_REQUEST["connected"] == "yes") {
+            global $_USER;
+            if ($_USER)
+                add_achievement("cpoi");
+        }
+
+
         optEcho($codes[0]["value"]);
         return 0;
     }
@@ -340,6 +350,8 @@ if (isset($_REQUEST["e"]) && checkValidValue(htmlspecialchars($_REQUEST["e"]))) 
 if (isset($_REQUEST["ping"])) {
     optEcho("pong!");
 }
+
+include_once("cestmoi/main.php");
 
 if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) && !isset($_REQUEST["d"]) && !isset($_REQUEST["e"]) && !isset($_REQUEST["p"]) && !isset($_REQUEST["ping"]) && !isset($_REQUEST["uc"]))) {
 ?>
@@ -376,6 +388,8 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
 
         <meta property="og:url" content="https://cpoi.0xy.fr/" />
         <meta data-react-helmet="true" name="theme-color" content="#207DFE" />
+
+        <?php cestmoi_setup_head(); ?>
 
         <script type="application/ld+json">
             {
@@ -783,10 +797,20 @@ if (isset($_REQUEST["qr"]) || (!isset($_REQUEST["a"]) && !isset($_REQUEST["c"]) 
                     class="bottomLink" id="bottomPrivacy">Privacy Policy</a>
             </p>
         </main>
+        <script>
+            function is_connected_info() {
+                return <?php if ($_USER) echo "true;";
+                        else echo "false;"; ?>
+            }
 
+            function append_connected_info() {
+                return "<?php if ($_USER) echo "&connected=yes"; ?>";
+            }
+        </script>
         <script src="./extensionWebsite/scripts/memory.js"></script>
         <script src="./extensionWebsite/scripts/settings.js"></script>
         <script src="./extensionWebsite/scripts/srvmenu.js"></script>
+        <?php cestmoi_setup_foot(); ?>
     </body>
 
     </html>

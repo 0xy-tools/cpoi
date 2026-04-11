@@ -6,3 +6,6 @@
 	path = cpoi-extension
 	url = https://github.com/MagicTINTIN/cpoi-extension
 	branch = main
+[submodule "cestmoi"]
+	path = cestmoi
+	url = git@github.com:MagicTINTIN/cestmoi.git
